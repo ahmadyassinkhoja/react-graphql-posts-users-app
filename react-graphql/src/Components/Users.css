@@ -1,0 +1,15 @@
+.image{
+    width: 18rem;
+    height: 18rem;
+}
+
+.card{
+    width: 30%;
+    float: left;
+    margin: 10px;
+}
+.delete{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
