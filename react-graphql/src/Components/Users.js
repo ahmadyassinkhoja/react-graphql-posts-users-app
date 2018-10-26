@@ -2,6 +2,8 @@ import React from 'react'
 import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
+import { Link } from 'react-router-dom';
+
 import './Users.css'
 
 const createUser = gql`
@@ -73,7 +75,8 @@ const User = ({id, name, email, age}) => (
                 <h3 className="card-title">{name}</h3>
                 <h5 className="card-text">{email}</h5>
                 {age ? <p> age: {age} </p> : <p> age: not provided </p> }
-                <a href={"/user/"+ id}>Edit</a>
+                {/* <a href={"/user/"+ id}>Edit</a> */}
+                <Link to={{ pathname: `/user/ + ${id}`, state: { name, age, email, id } }}>Edit</Link>
                 
                 <Mutation mutation={deleteUser} variables={{ id }}>
                     {data => <button className="delete btn-danger" onClick={data}>X</button>}

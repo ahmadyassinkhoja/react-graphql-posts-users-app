@@ -16,10 +16,10 @@ const users = []
 
 class UserDetails extends React.Component {
     state = {
-        id:'',
-        name:'',
-        email:'',
-        age:'',
+        name: this.props.match.location.state.name,
+        email: this.props.match.location.state.email,
+        id: this.props.match.location.state.id,
+        age: this.props.match.location.state.age,
         users: [],
         user: {}
     }
@@ -28,7 +28,7 @@ class UserDetails extends React.Component {
         // const getUsers = new Promise( (resolve, reject) => {
             let once = true
             let users = this.state.users
-            let user = {}
+            // let user = {}
             
             let { name, email, age, id } = this.state
 
@@ -47,6 +47,9 @@ class UserDetails extends React.Component {
             
             // })
             const user_id = this.props.match.match.params.id
+            console.log(this.props.match.location.state)
+            // let user = this.props.match.location.state
+           
         // console.log(this.stateuser, users)
         // this.setState({name: user.name})
         // this.setState({email: user.email})
@@ -71,39 +74,39 @@ class UserDetails extends React.Component {
                 // this.state.user = data.users.find( (user) => user.id.toString() == user_id.toString())
                 // this.setState({name: user.name})
                 // this.state
-                let promise1 = new Promise(  function(resolve, reject) { 
-                   resolve(data.users)
-                 } );
-                 promise1
-                 .then( (users) => {
-                    this.state.user = this.state.users.find( (user) => user.id.toString() == user_id.toString())
-                    return this.state.user
-                 })
-                 .then ( (user) => {
-                    console.log(user, this.state.name)
-                    // this.setState({name: user.name})
-                    // this.state.name = user.name
-                    setTimeout( () =>this.state.name = user.name , 1000) 
-                    return user
-                 })
-                 .then ( (user) => {
-                    // console.log(user, this.state.name)
-                    // this.setState({name: user.name})
-                    setTimeout( () =>this.state.email = user.email , 3000) 
-                    return user
-                 })
-                 .then ( (user) => {
-                    // console.log(user, this.state.name)
-                    // this.setState({name: user.name})
-                    setTimeout( () =>this.state.age = user.age , 3000) 
-                    return user
-                 })
-                 .then ( (user) => {
-                    // console.log(user, this.state.name)
-                    // this.setState({name: user.name})
-                    setTimeout( () =>this.state.id = user.id , 3000) 
-                    return user
-                 })
+                // let promise1 = new Promise(  function(resolve, reject) { 
+                //    resolve(data.users)
+                //  } );
+                //  promise1
+                //  .then( (users) => {
+                //     this.state.user = this.state.users.find( (user) => user.id.toString() == user_id.toString())
+                //     return this.state.user
+                //  })
+                //  .then ( (user) => {
+                //     console.log(user, this.state.name)
+                //     // this.setState({name: user.name})
+                //     // this.state.name = user.name
+                //     setTimeout( () =>this.state.name = user.name , 1000) 
+                //     return user
+                //  })
+                //  .then ( (user) => {
+                //     // console.log(user, this.state.name)
+                //     // this.setState({name: user.name})
+                //     setTimeout( () =>this.state.email = user.email , 3000) 
+                //     return user
+                //  })
+                //  .then ( (user) => {
+                //     // console.log(user, this.state.name)
+                //     // this.setState({name: user.name})
+                //     setTimeout( () =>this.state.age = user.age , 3000) 
+                //     return user
+                //  })
+                //  .then ( (user) => {
+                //     // console.log(user, this.state.name)
+                //     // this.setState({name: user.name})
+                //     setTimeout( () =>this.state.id = user.id , 3000) 
+                //     return user
+                //  })
 
 
                 return <h1>Users Details </h1>
@@ -144,10 +147,19 @@ class UserDetails extends React.Component {
                                 placeholder="Age"
                             />
                         </p> 
-                    : <p> age: not provided </p> }
+                    : <p> age: <input
+                    className="form-control"
+                    value={age}
+                    onChange={e => this.setState({ age: e.target.value })}
+                    type="text"
+                    placeholder="Age not provided"
+                /> </p> }
 
                     <Mutation mutation={updateUser} variables={{ id, data:{ name, age, email } }}>
-                    {UpdateUser => <button className="btn-primary btn-block" onClick={UpdateUser}>Update User</button>}
+    {UpdateUser => <button className="btn-primary btn-block" onClick={ () => {
+     UpdateUser()
+     window.location.reload()
+     this.props.match.history.push('/users') } }>Update User</button>}
                     </Mutation>
                 
                     
