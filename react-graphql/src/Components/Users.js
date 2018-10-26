@@ -73,6 +73,7 @@ const User = ({id, name, email, age}) => (
                 <h3 className="card-title">{name}</h3>
                 <h5 className="card-text">{email}</h5>
                 {age ? <p> age: {age} </p> : <p> age: not provided </p> }
+                <a href={"/user/"+ id}>Edit</a>
                 
                 <Mutation mutation={deleteUser} variables={{ id }}>
                     {data => <button className="delete btn-danger" onClick={data}>X</button>}

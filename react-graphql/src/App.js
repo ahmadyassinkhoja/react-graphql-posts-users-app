@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { Switch, Route } from 'react-router-dom'
+import { Query, Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
 // import { ApolloProvider } from 'react-apollo'
 // import  ApolloClient  from 'apollo-boost'
 
@@ -9,6 +11,7 @@ import Home from './Components/Home'
 import Users from './Components/Users'
 import Courses from './Courses'
 import Posts from './Components/Posts'
+import UserDetails from './Components/UserDetails'
 
 // const client = new ApolloClient({
 //   // uri: "https://vm8mjvrnv3.lp.gql.zone/graphql"
@@ -17,6 +20,9 @@ import Posts from './Components/Posts'
 
 
 class App extends Component {
+  state = {
+    users: []
+  }
   render() {
     return (
       
@@ -24,7 +30,16 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home}/>
           {/* both /roster and /roster/:number begin with /roster */}
-          <Route path='/users' component={Users}/>
+          <Route path='/users' render={ (match) => 
+            <Users
+              users={this.state.users}
+            />
+          }/>
+          <Route path='/user/:id' render= { (match) => 
+            <UserDetails
+              match={match}
+            />
+          }/>
           <Route path='/posts' component={Posts}/>
         </Switch>
           {/* <Users/> */}
