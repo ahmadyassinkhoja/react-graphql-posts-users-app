@@ -3,6 +3,8 @@ import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import './Posts.css'
+import { Link } from 'react-router-dom';
+
 
 const createPost = gql`
   mutation CreatePost($title: String!, $body: String!, $published: Boolean, $author: ID!) {
@@ -13,7 +15,15 @@ const createPost = gql`
   }
 `
 
-const Post = ({title,body,published, author, comments}) => (
+const deletePost = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id){
+        title
+    }
+  }
+`
+
+const Post = ({id, title,body,published, author, comments}) => (
     <div>
         <div className="card">
         <div className="">
@@ -25,12 +35,21 @@ const Post = ({title,body,published, author, comments}) => (
                 <h6 className="card-text">Author: {author.name}</h6>
                 {published ? <p> published: {published} </p> : <p> published: not provided </p> }
 
-                <h3>Comments are:</h3>
+
+                {/* <h3>Comments are:</h3>
                 { comments.map( (comment) => (
                     <div key={comment.id}>
                         <p>{author.name} commented: {comment.text}</p>
                     </div>
-                )) }
+                )) } */}
+
+                <Mutation mutation={deletePost} variables={{ id }}>
+                    {data => <button className="delete btn-danger" onClick={()=>{ 
+                        data()
+                     window.location.reload()} }>X</button>}
+                </Mutation>
+
+                <Link to={{ pathname: `/post/ + ${id}`, state: { id, title, body, published, author } }}>Edit</Link>
 
             </div>
         </div>
@@ -80,7 +99,8 @@ class CreatePost extends React.Component {
             />
           </div>
           <Mutation mutation={createPost} variables={{ title, body, published, author }}>
-            {data => <button className="btn-primary btn-block" onClick={data}>Create Post</button>}
+            {data => <button className="btn-primary btn-block" onClick={ () => {data()
+            window.location.reload()} }>Create Post</button>}
           </Mutation>
         </div>
       )
@@ -99,7 +119,7 @@ const Posts = () => (
                     title
                     body
                     published
-                    author { name } 
+                    author { id name } 
                     comments {
                             id
                             text

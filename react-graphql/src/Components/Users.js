@@ -58,7 +58,9 @@ class CreateUser extends React.Component {
             />
           </div>
           <Mutation mutation={createUser} variables={{ name,email,age }}>
-            {data => <button className="btn-primary btn-block" onClick={data}>Create User</button>}
+            {data => <button className="btn-primary btn-block" onClick={ () => {
+                data()
+                window.location.reload()} }>Create User</button>}
           </Mutation>
         </div>
       )
@@ -79,7 +81,9 @@ const User = ({id, name, email, age}) => (
                 <Link to={{ pathname: `/user/ + ${id}`, state: { name, age, email, id } }}>Edit</Link>
                 
                 <Mutation mutation={deleteUser} variables={{ id }}>
-                    {data => <button className="delete btn-danger" onClick={data}>X</button>}
+                    {data => <button className="delete btn-danger" onClick={()=>{ 
+                        data()
+                     window.location.reload()} }>X</button>}
                 </Mutation>
             </div>
         </div>

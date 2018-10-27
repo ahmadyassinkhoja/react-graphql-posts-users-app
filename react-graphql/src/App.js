@@ -12,6 +12,7 @@ import Users from './Components/Users'
 import Courses from './Courses'
 import Posts from './Components/Posts'
 import UserDetails from './Components/UserDetails'
+import PostDetails from './Components/PostDetails'
 
 // const client = new ApolloClient({
 //   // uri: "https://vm8mjvrnv3.lp.gql.zone/graphql"
@@ -37,6 +38,11 @@ class App extends Component {
           }/>
           <Route path='/user/:id' render= { (match) => 
             <UserDetails
+              match={match}
+            />
+          }/>
+          <Route path='/post/:id' render= { (match) => 
+            <PostDetails
               match={match}
             />
           }/>
